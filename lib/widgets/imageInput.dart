@@ -16,25 +16,29 @@ class ImageInput extends StatefulWidget {
 class _ImageInputState extends State<ImageInput> {
   File _storedImage;
 
-  final picker = ImagePicker();
+  final imagePicker = ImagePicker();
 
   Future _getImage() async {
-    final pickedFile = await picker.getImage(
+    final pickedFile = await imagePicker.getImage(
       source: ImageSource.camera,
       maxWidth: 600,
     );
 
-    setState(() {
-      if (pickedFile != null) {
-        _storedImage = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-    final appDir = await syspath.getApplicationDocumentsDirectory();
-    final filename = path.basename(_storedImage.path);
-    final savedImage = await _storedImage.copy('${appDir.path}/$filename');
-    widget.onSelectImage(savedImage);
+    if (pickedFile != null) {
+      setState(() {
+        if (pickedFile != null) {
+          _storedImage = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+
+      final appDir = await syspath.getApplicationDocumentsDirectory();
+      final filename = path.basename(_storedImage.path);
+      final savedImage = await _storedImage.copy('${appDir.path}/$filename');
+      widget.onSelectImage(savedImage);
+    }
+    return;
   }
 
   @override
