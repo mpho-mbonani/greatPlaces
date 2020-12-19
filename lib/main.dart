@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Great Places',
         theme: ThemeData(
-          backgroundColor: Color.fromRGBO(255, 253, 208, 1), //cream
-          primaryColor: Color.fromRGBO(255, 253, 208, 1), //cream
+          backgroundColor: Colors.white,
+          primaryColor: Colors.white,
           accentColor: Colors.black,
           primarySwatch: Colors.amber,
         ),

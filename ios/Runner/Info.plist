@@ -26,6 +26,10 @@
 	<string>Please Provide Permissions To Access Gallery</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please Provide Permissions To Access Camera</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please Provide Permissions To Location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Please Provide Permissions To Location</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
