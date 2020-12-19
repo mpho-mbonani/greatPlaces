@@ -8,7 +8,6 @@ class PlacesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 253, 208, 1), //cream
       appBar: AppBar(
         elevation: 0,
         actions: [
