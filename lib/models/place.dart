@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'location.dart';
+import 'coordinates.dart';
 
 class Place {
   final String id;
   final String title;
-  final Location location;
+  final Coordinates location;
   final File image;
 
   Place(

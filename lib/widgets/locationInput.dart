@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:greatPlaces/helpers/locationHelper.dart';
+import 'package:greatPlaces/screens/mapDisplay.dart';
 import 'package:location/location.dart';
 
 class LocationInput extends StatefulWidget {
@@ -9,14 +10,38 @@ class LocationInput extends StatefulWidget {
 
 class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
+  LocationData locationData;
+  LocationHelper locationHelper;
+
   Future<void> _getCurrentUserLocation() async {
-    final locationData = await Location().getLocation();
-    final staticMapUrl = LocationHelper.generateLocationPreviewImage(
-        latitude: locationData.latitude, longitude: locationData.longitude);
+    locationData = await Location().getLocation();
+    locationHelper = LocationHelper(
+        cacheLatitude: locationData.latitude,
+        cacheLongitude: locationData.longitude);
+    final staticMapUrl = locationHelper.generateLocationPreviewImage();
 
     setState(() {
       _previewImageUrl = staticMapUrl;
     });
+  }
+
+  Future<void> _selectOnMap() async {
+    final selectedLocation = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (ctx) => MapDisplay(
+          locationHelper: locationHelper,
+          isSelecting: true,
+        ),
+      ),
+    );
+    if (selectedLocation != null) {}
+  }
+
+  @override
+  void didChangeDependencies() {
+    _getCurrentUserLocation();
+    super.didChangeDependencies();
   }
 
   @override
@@ -27,11 +52,11 @@ class _LocationInputState extends State<LocationInput> {
           height: 160,
           width: double.infinity,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            border: Border.all(width: 1, color: Colors.grey),
-          ),
+          // decoration: BoxDecoration(
+          //   border: Border.all(width: 1, color: Colors.grey),
+          // ),
           child: _previewImageUrl == null
-              ? Text('No location chosen', textAlign: TextAlign.center)
+              ? CircularProgressIndicator()
               : Image.network(
                   _previewImageUrl,
                   fit: BoxFit.cover,
@@ -41,13 +66,13 @@ class _LocationInputState extends State<LocationInput> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // TextButton.icon(
+            //   onPressed: _getCurrentUserLocation,
+            //   icon: Icon(Icons.location_on),
+            //   label: Text('Current Location'),
+            // ),
             TextButton.icon(
-              onPressed: _getCurrentUserLocation,
-              icon: Icon(Icons.location_on),
-              label: Text('Current Location'),
-            ),
-            TextButton.icon(
-              onPressed: null,
+              onPressed: _selectOnMap,
               icon: Icon(Icons.map),
               label: Text('Select Location'),
             ),
