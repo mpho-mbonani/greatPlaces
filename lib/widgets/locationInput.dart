@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:greatPlaces/helpers/locationHelper.dart';
+import 'package:greatPlaces/models/coordinates.dart';
 import 'package:greatPlaces/screens/mapDisplay.dart';
 import 'package:location/location.dart';
 
@@ -31,6 +32,9 @@ class _LocationInputState extends State<LocationInput> {
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => MapDisplay(
+          initialLocation: Coordinates(
+              latitude: locationData.latitude,
+              longitude: locationData.longitude),
           isSelecting: true,
         ),
       ),
@@ -61,7 +65,7 @@ class _LocationInputState extends State<LocationInput> {
               ? CircularProgressIndicator()
               : Image.network(
                   _previewImageUrl,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   width: double.infinity,
                 ),
         ),
@@ -76,7 +80,7 @@ class _LocationInputState extends State<LocationInput> {
             TextButton.icon(
               onPressed: _selectOnMap,
               icon: Icon(Icons.map),
-              label: Text('Select Location'),
+              label: Text('Select On Map'),
             ),
           ],
         )

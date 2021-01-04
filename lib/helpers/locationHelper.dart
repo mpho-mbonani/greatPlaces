@@ -7,6 +7,6 @@ class LocationHelper {
   LocationHelper({this.cacheLatitude, this.cacheLongitude});
 
   String generateLocationPreviewImage() {
-    return 'https://maps.googleapis.com/maps/api/staticmap?center=&$cacheLatitude,$cacheLongitude&zoom=20&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$cacheLatitude,$cacheLongitude&key=$GOOGLE_API_KEY';
+    return 'https://maps.googleapis.com/maps/api/staticmap?center=&$cacheLatitude,$cacheLongitude&zoom=15&size=600x300&maptype=roadmap&markers=color:red%7Clabel:o%7C$cacheLatitude,$cacheLongitude&key=$GOOGLE_API_KEY';
   }
 }

@@ -7,9 +7,8 @@ class MapDisplay extends StatefulWidget {
   final bool isSelecting;
 
   MapDisplay({
-    this.initialLocation =
-        const Coordinates(latitude: 37.422, longitude: -122.084),
-    this.isSelecting = false,
+    this.initialLocation,
+    this.isSelecting,
   });
 
   @override
@@ -27,6 +26,9 @@ class _MapDisplayState extends State<MapDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    print('Ekse');
+    print(widget.initialLocation.latitude);
+    print(widget.initialLocation.longitude);
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
@@ -44,12 +46,13 @@ class _MapDisplayState extends State<MapDisplay> {
       body: GoogleMap(
         key: Key('AIzaSyDQbZ72mMLvPF2ZZ00zGaiwTqu-5ZI6Jn4'),
         myLocationButtonEnabled: true,
+        myLocationEnabled: true,
         initialCameraPosition: CameraPosition(
+          zoom: 15,
           target: LatLng(
             widget.initialLocation.latitude,
             widget.initialLocation.longitude,
           ),
-          zoom: 20,
         ),
         onTap: widget.isSelecting ? _selectLocation : null,
         markers: _pickedLocation == null
