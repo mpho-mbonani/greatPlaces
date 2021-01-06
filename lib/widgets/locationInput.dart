@@ -15,6 +15,7 @@ class LocationInput extends StatefulWidget {
 
 class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
+  LocationData locationData;
 
   void _showPreview(double lat, double lng) {
     final staticMapImageUrl =
@@ -26,10 +27,7 @@ class _LocationInputState extends State<LocationInput> {
 
   Future<void> _getCurrentUserLocation() async {
     try {
-      final locationData = await Location().getLocation();
-
-      LocationHelper.currentLatitude = locationData.latitude;
-      LocationHelper.currentLongitude = locationData.longitude;
+      locationData = await Location().getLocation();
 
       _showPreview(locationData.latitude, locationData.longitude);
       widget.onSelectPlace(locationData.latitude, locationData.longitude);
@@ -43,6 +41,8 @@ class _LocationInputState extends State<LocationInput> {
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => MapDisplay(
+          currentLatitude: locationData.latitude,
+          currentLongitude: locationData.longitude,
           isSelecting: true,
         ),
       ),

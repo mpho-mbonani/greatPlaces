@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:greatPlaces/models/coordinates.dart';
 
 class MapDisplay extends StatefulWidget {
-  final Coordinates initialLocation;
+  final double currentLatitude;
+  final double currentLongitude;
   final bool isSelecting;
 
   MapDisplay({
-    // change default coordinates to current location
-    this.initialLocation =
-        const Coordinates(latitude: 37.422, longitude: -122.084),
+    this.currentLatitude,
+    this.currentLongitude,
     this.isSelecting,
   });
 
@@ -49,8 +48,8 @@ class _MapDisplayState extends State<MapDisplay> {
         initialCameraPosition: CameraPosition(
           zoom: 15,
           target: LatLng(
-            widget.initialLocation.latitude,
-            widget.initialLocation.longitude,
+            widget.currentLatitude,
+            widget.currentLongitude,
           ),
         ),
         onTap: widget.isSelecting ? _selectLocation : null,
@@ -61,8 +60,8 @@ class _MapDisplayState extends State<MapDisplay> {
                   markerId: MarkerId('o'),
                   position: _pickedLocation ??
                       LatLng(
-                        widget.initialLocation.latitude,
-                        widget.initialLocation.longitude,
+                        widget.currentLatitude,
+                        widget.currentLongitude,
                       ),
                 ),
               },

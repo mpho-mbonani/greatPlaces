@@ -33,7 +33,8 @@ class PlaceDetails extends StatelessWidget {
               Navigator.of(context).push(MaterialPageRoute(
                   fullscreenDialog: true,
                   builder: (ctx) => MapDisplay(
-                        initialLocation: selectedPlace.location,
+                        currentLatitude: selectedPlace.location.latitude,
+                        currentLongitude: selectedPlace.location.longitude,
                         isSelecting: false,
                       )));
             },
