@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:greatPlaces/models/coordinates.dart';
 import 'package:greatPlaces/providers/greatPlaces.dart';
 import 'package:greatPlaces/widgets/imageInput.dart';
 import 'package:greatPlaces/widgets/locationInput.dart';
@@ -15,15 +16,22 @@ class AddPlace extends StatefulWidget {
 class _AddPlaceState extends State<AddPlace> {
   final _titleController = TextEditingController();
   File _pickedImage;
+  Coordinates _pickedLocation;
 
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
   }
 
+  void _selectPlace(double latitude, double longitude) {
+    _pickedLocation = Coordinates(latitude: latitude, longitude: longitude);
+  }
+
   void _savePlace() {
-    if (_titleController.text.isNotEmpty && _pickedImage != null) {
+    if (_titleController.text.isNotEmpty &&
+        _pickedImage != null &&
+        _pickedLocation == null) {
       Provider.of<GreatPlaces>(context, listen: false)
-          .addPlace(_titleController.text, _pickedImage);
+          .addPlace(_titleController.text, _pickedImage, _pickedLocation);
       Navigator.of(context).pop();
     }
   }
@@ -52,7 +60,7 @@ class _AddPlaceState extends State<AddPlace> {
                     SizedBox(height: 10),
                     ImageInput(_selectImage),
                     SizedBox(height: 10),
-                    LocationInput(),
+                    LocationInput(_selectPlace),
                   ],
                 ),
               ),

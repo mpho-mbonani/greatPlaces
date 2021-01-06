@@ -26,9 +26,6 @@ class _MapDisplayState extends State<MapDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    print('Ekse');
-    print(widget.initialLocation.latitude);
-    print(widget.initialLocation.longitude);
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
