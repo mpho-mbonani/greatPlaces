@@ -56,7 +56,7 @@ class _MapDisplayState extends State<MapDisplay> {
             ? null
             : {
                 Marker(
-                  markerId: MarkerId('m1'),
+                  markerId: MarkerId('o'),
                   position: _pickedLocation ??
                       LatLng(
                         widget.initialLocation.latitude,

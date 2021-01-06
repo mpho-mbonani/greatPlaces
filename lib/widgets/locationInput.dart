@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:greatPlaces/helpers/locationHelper.dart';
-import 'package:greatPlaces/models/coordinates.dart';
 import 'package:greatPlaces/screens/mapDisplay.dart';
 import 'package:location/location.dart';
 
@@ -16,28 +15,20 @@ class LocationInput extends StatefulWidget {
 
 class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
-  LocationData locationData;
-  LocationHelper locationHelper;
 
   void _showPreview(double lat, double lng) {
-    // supplying variables to helper
-    locationHelper = LocationHelper(
-        cacheLatitude: locationData.latitude,
-        cacheLongitude: locationData.longitude);
-
-    // running with previously supplied variables
-    final staticMapUrl = locationHelper.generateLocationPreviewImage();
-
+    final staticMapImageUrl =
+        LocationHelper.generateLocationPreviewImage(lat, lng);
     setState(() {
-      _previewImageUrl = staticMapUrl;
+      _previewImageUrl = staticMapImageUrl;
     });
   }
 
   Future<void> _getCurrentUserLocation() async {
     try {
-      locationData = await Location().getLocation();
-      _showPreview(null, null);
-      widget.onSelectPlace(locationData.latitude, locationData.longitude);
+      final locData = await Location().getLocation();
+      _showPreview(locData.latitude, locData.longitude);
+      widget.onSelectPlace(locData.latitude, locData.longitude);
     } catch (error) {
       return;
     }
@@ -48,9 +39,6 @@ class _LocationInputState extends State<LocationInput> {
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => MapDisplay(
-          initialLocation: Coordinates(
-              latitude: locationData.latitude,
-              longitude: locationData.longitude),
           isSelecting: true,
         ),
       ),
