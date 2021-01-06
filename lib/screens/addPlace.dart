@@ -29,7 +29,7 @@ class _AddPlaceState extends State<AddPlace> {
   void _savePlace() {
     if (_titleController.text.isNotEmpty &&
         _pickedImage != null &&
-        _pickedLocation == null) {
+        _pickedLocation != null) {
       Provider.of<PlacesProvider>(context, listen: false)
           .addPlace(_titleController.text, _pickedImage, _pickedLocation);
       Navigator.of(context).pop();
