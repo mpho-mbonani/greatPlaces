@@ -7,7 +7,9 @@ class MapDisplay extends StatefulWidget {
   final bool isSelecting;
 
   MapDisplay({
-    this.initialLocation,
+    // change default coordinates to current location
+    this.initialLocation =
+        const Coordinates(latitude: 37.422, longitude: -122.084),
     this.isSelecting,
   });
 
