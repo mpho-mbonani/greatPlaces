@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:greatPlaces/providers/greatPlaces.dart';
+import 'package:greatPlaces/providers/placesProvider.dart';
+import 'package:greatPlaces/screens/placeDetails.dart';
 import 'package:provider/provider.dart';
 
 import 'addPlace.dart';
@@ -14,17 +15,17 @@ class PlacesList extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                Navigator.of(context).pushNamed(AddPlace.routename);
+                Navigator.of(context).pushNamed(AddPlace.routeName);
               })
         ],
       ),
       body: FutureBuilder(
-        future: Provider.of<GreatPlaces>(context, listen: false)
+        future: Provider.of<PlacesProvider>(context, listen: false)
             .fetchAndSetPlaces(),
         builder: (ctx, previousState) => previousState.connectionState ==
                 ConnectionState.waiting
             ? Center(child: CircularProgressIndicator())
-            : Consumer<GreatPlaces>(
+            : Consumer<PlacesProvider>(
                 child: Center(
                   child: const Text('No Places Yet'),
                 ),
@@ -41,7 +42,9 @@ class PlacesList extends StatelessWidget {
                               subtitle:
                                   Text(greatPlaces.items[i].location.address),
                               onTap: () {
-                                // go to detail page
+                                Navigator.of(context).pushNamed(
+                                    PlaceDetails.routeName,
+                                    arguments: greatPlaces.items[i].id);
                               },
                             ),
                           ),

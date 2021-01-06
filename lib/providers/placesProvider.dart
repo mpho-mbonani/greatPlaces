@@ -6,11 +6,15 @@ import 'package:greatPlaces/helpers/locationHelper.dart';
 import 'package:greatPlaces/models/coordinates.dart';
 import '../models/place.dart';
 
-class GreatPlaces with ChangeNotifier {
-  List<Place> _items = [];
+class PlacesProvider with ChangeNotifier {
+  List<Place> _places = [];
 
   List<Place> get items {
-    return [..._items];
+    return [..._places];
+  }
+
+  Place findById(String id) {
+    return _places.firstWhere((x) => x.id == id);
   }
 
   Future<void> addPlace(String title, File image, Coordinates location) async {
@@ -27,7 +31,7 @@ class GreatPlaces with ChangeNotifier {
         title: title,
         location: updatedLocation,
         image: image);
-    _items.add(newPlace);
+    _places.add(newPlace);
     notifyListeners();
     DbHelper.insert('places', {
       'id': newPlace.id,
@@ -41,7 +45,7 @@ class GreatPlaces with ChangeNotifier {
 
   Future<void> fetchAndSetPlaces() async {
     final dataList = await DbHelper.getData('places');
-    _items = dataList
+    _places = dataList
         .map((item) => Place(
               id: item['id'],
               image: File(item['image']),

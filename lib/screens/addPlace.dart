@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:greatPlaces/models/coordinates.dart';
-import 'package:greatPlaces/providers/greatPlaces.dart';
+import 'package:greatPlaces/providers/placesProvider.dart';
 import 'package:greatPlaces/widgets/imageInput.dart';
 import 'package:greatPlaces/widgets/locationInput.dart';
 import 'package:provider/provider.dart';
 
 class AddPlace extends StatefulWidget {
-  static const routename = '/addPlace';
+  static const routeName = '/addPlace';
   @override
   _AddPlaceState createState() => _AddPlaceState();
 }
@@ -30,7 +30,7 @@ class _AddPlaceState extends State<AddPlace> {
     if (_titleController.text.isNotEmpty &&
         _pickedImage != null &&
         _pickedLocation == null) {
-      Provider.of<GreatPlaces>(context, listen: false)
+      Provider.of<PlacesProvider>(context, listen: false)
           .addPlace(_titleController.text, _pickedImage, _pickedLocation);
       Navigator.of(context).pop();
     }
