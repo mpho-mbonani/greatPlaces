@@ -31,8 +31,10 @@ class PlacesProvider with ChangeNotifier {
         title: title,
         location: updatedLocation,
         image: image);
+
     _places.add(newPlace);
     notifyListeners();
+
     DbHelper.insert('places', {
       'id': newPlace.id,
       'title': newPlace.title,
